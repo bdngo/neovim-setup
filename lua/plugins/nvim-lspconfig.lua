@@ -1,29 +1,16 @@
 return {
-    "neovim/nvim-lspconfig", -- REQUIRED: for native Neovim LSP integration
-    lazy = false, -- REQUIRED: tell lazy.nvim to start this plugin at startup
-    dependencies = {
-        -- main one
-        { "ms-jpq/coq_nvim", branch = "coq" },
-
-        -- 9000+ Snippets
-        { "ms-jpq/coq.artifacts", branch = "artifacts" },
-
-        -- lua & third party sources -- See https://github.com/ms-jpq/coq.thirdparty
-        -- Need to **configure separately**
-        { 'ms-jpq/coq.thirdparty', branch = "3p" }
-        -- - shell repl
-        -- - nvim lua api
-        -- - scientific calculator
-        -- - comment banner
-        -- - etc
-    },
-    init = function()
-        vim.g.coq_settings = {
-            auto_start = true, -- if you want to start COQ at startup
-            -- Your COQ settings here
-        }
-    end,
+    "neovim/nvim-lspconfig",
     config = function()
-        -- Your LSP settings here
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+        require('mason').setup()
+        local mason_lspconfig = require 'mason-lspconfig'
+        mason_lspconfig.setup {
+            ensure_installed = { "pyright" }
+        }
+        require("lspconfig").pyright.setup {
+            capabilities = capabilities,
+        }
     end,
 }
