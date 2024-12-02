@@ -5,11 +5,22 @@ return {
         capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
         require('mason').setup()
-        local mason_lspconfig = require 'mason-lspconfig'
-        mason_lspconfig.setup {
-            ensure_installed = { "pyright" }
+        local lspconfig = require("lspconfig")
+        lspconfig.lua_ls.setup {
+            capabilities = capabilities,
         }
-        require("lspconfig").pyright.setup {
+        lspconfig.rust_analyzer.setup {
+            capabilities = capabilities,
+            init_options = {
+                settings = {
+                    ["target-version"] = "py39"
+                }
+            }
+        }
+        lspconfig.ruff.setup {
+            capabilities = capabilities,
+        }
+        lspconfig.pylsp.setup {
             capabilities = capabilities,
         }
     end,
