@@ -11,17 +11,22 @@ return {
         }
         lspconfig.rust_analyzer.setup {
             capabilities = capabilities,
+        }
+        lspconfig.ruff.setup {
+            capabilities = capabilities,
             init_options = {
                 settings = {
                     ["target-version"] = "py39"
                 }
             }
         }
-        lspconfig.ruff.setup {
-            capabilities = capabilities,
-        }
         lspconfig.pylsp.setup {
             capabilities = capabilities,
+            init_options = {
+                settings = {
+                    ["target-version"] = "py39"
+                }
+            }
         }
     end,
 }
