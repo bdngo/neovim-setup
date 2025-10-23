@@ -2,9 +2,12 @@ return {
     'maxmx03/solarized.nvim',
     lazy = false,
     priority = 1000,
-    config = function()
-      vim.o.background = 'dark' -- or 'light'
-
-      vim.cmd.colorscheme 'solarized'
+    ---@type solarized.config
+    opts = {},
+    config = function(_, opts)
+        vim.o.termguicolors = true
+        require('solarized').setup(opts)
+        vim.cmd.colorscheme 'solarized'
+        vim.o.background = nil
     end,
 }
