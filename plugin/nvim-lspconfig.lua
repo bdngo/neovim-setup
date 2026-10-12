@@ -6,4 +6,6 @@ vim.lsp.enable({
     "rust_analyzer",
     "ruff",
     "pylsp",
+    "nil_ls",
+    "tinymist",
 })
